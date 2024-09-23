@@ -12,7 +12,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = product::latest()->paginate(5);
+
+        return view('products.index',compact('products'));
     }
 
     /**
@@ -29,14 +31,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // validation
-
         $validated = $request->validate([
             'name' => 'required',
             'details' => 'required',
         ]);
 
         // create a new product in database
-
         Product::create($request->all());
 
         //redirect the user
