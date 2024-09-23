@@ -49,6 +49,8 @@ class ProductController extends Controller
     public function show(product $product)
     {
         //
+
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -57,6 +59,7 @@ class ProductController extends Controller
     public function edit(product $product)
     {
         //
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -65,6 +68,17 @@ class ProductController extends Controller
     public function update(Request $request, product $product)
     {
         //
+        // validation
+        $validated = $request->validate([
+            'name' => 'required',
+            'details' => 'required',
+        ]);
+
+        // create a new product in database
+        $product->update($request->all());
+
+        //redirect the user
+        return redirect()->route('products.index');
     }
 
     /**
@@ -73,5 +87,7 @@ class ProductController extends Controller
     public function destroy(product $product)
     {
         //
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }

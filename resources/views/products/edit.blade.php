@@ -6,16 +6,17 @@
 
 <div class="main">
     <div class="add">
-        <h1 class="hed">Add new Product</h1>
-        <a class="buttonn" href="/products" >Back</a>
+        <h1>Add new Product</h1>
+        <a class="buttonn" href="/products" >back</a>
     </div>
     
     
-    <form action="{{ route('products.store') }}" method="post">
+    <form action="{{ route('products.update', $product->id) }}" method="POST">
         @csrf
+        @method('PUT')
         
         <!-- Name input field -->
-        <input type="text" name="name" placeholder="Product Name" "><br>
+        <input type="text" name="name" placeholder="Product Name" value={{ $product->name }} ><br>
         @error('title')
             <p>{{ $message }}</p>
         @enderror
@@ -23,7 +24,8 @@
         {{-- value="{{ old('title') }} --}}
         
         <!-- Detail textarea field -->
-        <textarea name="details" placeholder="Product Details" id="" cols="30" rows="10">{{ old('detail') }}</textarea><br>
+        <textarea name="details" placeholder="Product Details" id="" cols="30" rows="10" value={{ $product->details }}></textarea><br>
+        {{-- {{ old('detail') }} --}}
         @error('detail')
             <p>{{ $message }}</p>
         @enderror
@@ -39,16 +41,11 @@
 
 <style>
 
-    h1 {
-        text-align: center;
-    }
-
     .main{
         max-width: 700px;
         margin: auto;
         border: 1px solid black;
         padding: 30px;
-        
     }
 
 
@@ -59,12 +56,11 @@
     }
 
 .buttonn {
-    background-color: rgb(21, 20, 20);
+    background-color: red;
    color: white;
    padding: 5px 10px;
     font-size: 20px;
-border: 2px solid black;  
-text-decoration: none;  
+border: 2px solid black;    
 
 }
 
